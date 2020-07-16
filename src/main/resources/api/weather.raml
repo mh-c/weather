@@ -1,0 +1,82 @@
+#%RAML 1.0
+baseUri: https://anypoint.mulesoft.com/mocking/api/v1/links/03d86f8f-63f7-4c2d-9a98-7a8d52c07733/ # 
+title: weather
+version: v1
+description: To get weather infomation or retrieve a list of cities
+
+types:
+  weather:
+    properties:
+      humidity: string
+      temperature: string
+
+
+/GetWeather:
+  post:
+    body:
+      application/json:
+        type: |
+          {
+            "type": "object",
+            "required": true,
+            "properties": {
+              "city": {
+                "type": "string",
+                "required": false
+              },
+              "country": {
+                "type": "string",
+                "required": false
+              }
+            }
+          }
+    responses:
+      200:
+        body:
+          application/json:
+            type: weather
+            example: 
+              {
+                humidity: "0",
+                temperature: "37"
+              }
+      400:
+        body:
+          application/json:
+            example:
+              {
+                "Error Message": "Invalid Request"
+              }
+
+/GetCitiesByCountry:
+  post:
+    body:
+      application/json:
+        type: |
+          {
+            "type": "object",
+            "required": true,
+            "properties": {
+              "country": {
+                "type": "string",
+                "required": true
+              }
+            }
+          }
+    responses:
+      200:
+        body:
+          application/json:
+            type: array
+            example: 
+              ["cityA", "cityB", "cityC"]
+      400:
+        body:
+          application/json:
+            example:
+              {
+                "Error Message": "Invalid Request"
+              }
+
+      
+              
